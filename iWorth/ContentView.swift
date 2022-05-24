@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedRate = "Yearly"
     @State private var salary = 0
-    @State private var workingHours = ""
-    @State private var purchaseCost = ""
+    @State private var workingHours = 0
+    @State private var purchaseCost = 0
     @State private var hourlyRate = 0
     @State private var purchaseCostPerHour = 0
     
@@ -44,25 +44,23 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                VStack {
-                    HStack {
-                        Text("How much do you make: ")
-                        TextField("How much do you make?", value: $salary, format: .currency(code: "USD")).padding()
-                    }.padding(.horizontal)
+        VStack(alignment: .leading) {
+                    Text("How much do you make: ")
+                        
+                    TextField("How much do you make?", value: $salary, format: .currency(code: "USD"))
                     Picker("Rates", selection: $selectedRate) {
                         ForEach(rates, id:\.self) {
                             Text($0)
                         }
                     }.pickerStyle(.segmented).padding(.horizontal)
-                }
                 Divider().padding(.top)
-                TextField("Average hours worked a week", text: $workingHours).padding()
+                Text("Average hours worked a week: ")
+            TextField("Average hours worked a week", value: $workingHours, format: .number)
                 Divider()
-                TextField("How much does your purchase cost?", text: $purchaseCost).padding()
-            }
-        }
+                Text("How much does your purchase cost?")
+                TextField("How much does your purchase cost?", value: $purchaseCost, format: .currency(code: "USD"))
+            Spacer()
+        }.padding()
     }
 }
 
